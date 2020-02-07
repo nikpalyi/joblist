@@ -1,11 +1,10 @@
 var CronJob = require('cron').CronJob;
-var job = new CronJob(
-  '* * * * * *', //cron schedule experisson
-  function() {
-    console.log('You will see this message every second');
-  },
-  null,
-  true,
-  'America/Los_Angeles'
-);
-job.start();
+
+const fetchGithub = require('./tasks/fetch-github.js');
+
+// fetch Github jobs
+//cron schedule expression
+
+new CronJob('*/1 * * * *', fetchGithub, null, true, 'America/Los_Angeles');
+
+//from https://crontab.guru/

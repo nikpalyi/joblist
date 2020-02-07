@@ -1,4 +1,10 @@
 var fetch = require('node-fetch');
+var redis = require('redis'),
+  client = redis.createClient();
+
+const { promisify } = require('util');
+const getAsync = promisify(client.get).bind(client);
+const setAsync = promisify(client.get).bind(client);
 
 const baseURL = 'https://jobs.github.com/positions.json';
 
@@ -10,7 +16,7 @@ async function fetchGithub() {
   while (resultCount > 0) {
     const res = await fetch(`${baseURL}?page=${onPage}`);
     const jobs = await res.json();
-    allJobs.push(jobs);
+    allJobs.push(...jobs);
     resultCount = jobs.length;
     console.log('got', resultCount, 'jobs');
     onPage++;

@@ -42,10 +42,10 @@ async function fetchGithub() {
     return true;
   });
 
-  console.log('filtered down to', jrJob.length);
+  console.log('filtered down to', jrJobs.length);
 
   //set in redis
-  const success = await setAsync('github', JSON.stringify(allJobs));
+  const success = await setAsync('github', JSON.stringify(jrJobs));
   console.log({ success });
 }
 

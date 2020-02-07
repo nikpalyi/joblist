@@ -3,8 +3,8 @@ var redis = require('redis'),
   client = redis.createClient();
 
 const { promisify } = require('util');
-const getAsync = promisify(client.get).bind(client);
-const setAsync = promisify(client.get).bind(client);
+//const getAsync = promisify(client.get).bind(client);
+const setAsync = promisify(client.set).bind(client);
 
 const baseURL = 'https://jobs.github.com/positions.json';
 
@@ -22,6 +22,8 @@ async function fetchGithub() {
     onPage++;
   }
   console.log('got', allJobs.length, 'all jobs');
+  const success = await setAsync('github', JSON.stringify(allJobs));
+  console.log({ success });
 }
 
 fetchGithub();
